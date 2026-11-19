@@ -1,4 +1,6 @@
 """Test setup: runs every test against a separate test database (TEST_DATABASE_URL)."""
+import itertools
+
 import pytest
 from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
@@ -6,8 +8,10 @@ from sqlalchemy.orm import sessionmaker
 
 import app.models  # noqa: F401  (registers every table on Base.metadata)
 from app.config import settings
+from app.core.security import create_access_token
 from app.database import Base, get_db
 from app.main import app
+from app.models import User, UserRole
 
 if not settings.TEST_DATABASE_URL:
     raise RuntimeError("Set TEST_DATABASE_URL in backend/.env before running tests")
@@ -38,6 +42,25 @@ def db():
             session.execute(table.delete())
         session.commit()
         session.close()
+
+
+@pytest.fixture
+def make_headers(db):
+    """make_headers(UserRole.student) -> auth headers for a new user with that role (skips the login API)."""
+    counter = itertools.count()
+
+    def _make(role: UserRole) -> dict:
+        user = User(
+            email=f"{role.value}{next(counter)}@test.edu",
+            password_hash="not-used",
+            full_name="Test User",
+            role=role,
+        )
+        db.add(user)
+        db.commit()
+        return {"Authorization": f"Bearer {create_access_token(user.id, role.value)}"}
+
+    return _make
 
 
 @pytest.fixture

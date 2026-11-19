@@ -1,0 +1,80 @@
+[
+  {
+    "text": "How is your mood today?",
+    "answer_type": "option",
+    "metric": "mood",
+    "display_order": 1,
+    "options": [
+      {"label": "Very low", "value": 1},
+      {"label": "Low", "value": 2},
+      {"label": "Okay", "value": 3},
+      {"label": "Good", "value": 4},
+      {"label": "Very good", "value": 5}
+    ]
+  },
+  {
+    "text": "How stressed do you feel today?",
+    "answer_type": "option",
+    "metric": "stress",
+    "display_order": 2,
+    "options": [
+      {"label": "Not at all", "value": 1},
+      {"label": "A little", "value": 2},
+      {"label": "Moderately", "value": 3},
+      {"label": "Very", "value": 4},
+      {"label": "Extremely", "value": 5}
+    ]
+  },
+  {
+    "text": "How many hours did you sleep last night?",
+    "answer_type": "option",
+    "metric": "sleep",
+    "display_order": 3,
+    "options": [
+      {"label": "Less than 4", "value": 3.5},
+      {"label": "4-5", "value": 4.5},
+      {"label": "5-6", "value": 5.5},
+      {"label": "6-7", "value": 6.5},
+      {"label": "7-8", "value": 7.5},
+      {"label": "More than 8", "value": 8.5}
+    ]
+  },
+  {
+    "text": "How much energy did you have today?",
+    "answer_type": "option",
+    "metric": "none",
+    "display_order": 4,
+    "options": [
+      {"label": "Very low", "value": 1},
+      {"label": "Low", "value": 2},
+      {"label": "Moderate", "value": 3},
+      {"label": "High", "value": 4},
+      {"label": "Very high", "value": 5}
+    ]
+  },
+  {
+    "text": "Did you spend time with friends or family today?",
+    "answer_type": "option",
+    "metric": "none",
+    "display_order": 5,
+    "options": [
+      {"label": "No", "value": 0},
+      {"label": "A little", "value": 1},
+      {"label": "Yes", "value": 2}
+    ]
+  },
+  {
+    "text": "What is on your mind today?",
+    "answer_type": "text",
+    "is_required": false,
+    "max_length": 300,
+    "display_order": 6
+  },
+  {
+    "text": "One thing that went well today?",
+    "answer_type": "text",
+    "is_required": false,
+    "max_length": 200,
+    "display_order": 7
+  }
+]

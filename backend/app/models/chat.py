@@ -17,9 +17,14 @@ class RiskLevel(str, enum.Enum):
     high = "high"
 
 
+# One PostgreSQL enum type shared by chat_messages and checkin_answers
+risk_level_enum = Enum(RiskLevel, name="risk_level")
+
+
 class AlertSource(str, enum.Enum):
     chat = "chat"
     assessment = "assessment"
+    checkin = "checkin"
 
 
 class AlertStatus(str, enum.Enum):
@@ -36,9 +41,7 @@ class ChatMessage(IdTimestampMixin, Base):
     text: Mapped[str] = mapped_column(Text)  # never write this to logs
     sentiment: Mapped[str | None] = mapped_column(String(20))
     emotion: Mapped[str | None] = mapped_column(String(30))
-    risk_level: Mapped[RiskLevel] = mapped_column(
-        Enum(RiskLevel, name="risk_level"), server_default="none"
-    )
+    risk_level: Mapped[RiskLevel] = mapped_column(risk_level_enum, server_default="none")
 
 
 class CrisisAlert(IdTimestampMixin, Base):
