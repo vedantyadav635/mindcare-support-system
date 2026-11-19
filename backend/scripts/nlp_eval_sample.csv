@@ -1,0 +1,39 @@
+text,sentiment,emotion
+I finally finished my project and I feel great,positive,joy
+I got selected for the internship!,positive,joy
+Had a fun evening with my friends,positive,joy
+My presentation went really well today,positive,joy
+I love the new library on campus,positive,joy
+Thank you so much for helping me,positive,joy
+I'm so excited for the college fest,positive,joy
+I feel lonely in the hostel,negative,sadness
+I miss my family so much,negative,sadness
+I failed my exam and I feel terrible,negative,sadness
+Nobody talked to me all day,negative,sadness
+I feel empty and tired all the time,negative,sadness
+My best friend moved to another city and I feel lost,negative,sadness
+I cried after the call with my parents,negative,sadness
+I'm really scared about my results,negative,fear
+I am anxious about the placement interview,negative,fear
+What if I fail again this semester,negative,fear
+My heart races before every exam,negative,fear
+I'm worried I won't find a job,negative,fear
+I am terrified of speaking in front of the class,negative,fear
+My roommate keeps taking my things and I'm furious,negative,anger
+I'm so angry at my teammate for not doing his part,negative,anger
+The professor was unfair to me and it makes me mad,negative,anger
+I hate how people judge me here,negative,anger
+Stop telling me what to do,negative,anger
+The mess food today was disgusting,negative,disgust
+The washroom in the hostel is gross,negative,disgust
+It's revolting how some people behave in class,negative,disgust
+I can't believe I topped the class!,positive,surprise
+Wow I didn't expect the results so early,neutral,surprise
+I was shocked when they cancelled the exam,neutral,surprise
+I had lectures from 9 to 5 today,neutral,neutral
+I am going to the library after lunch,neutral,neutral
+The assignment is due on Friday,neutral,neutral
+I had dal and rice for dinner,neutral,neutral
+We have a lab session tomorrow morning,neutral,neutral
+I need to submit the form by Monday,neutral,neutral
+The class was shifted to room 204,neutral,neutral

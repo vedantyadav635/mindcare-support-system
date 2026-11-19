@@ -49,7 +49,7 @@ def test_submit_phq9_returns_band_message_and_disclaimer(client, make_headers, t
     assert body["total_score"] == total
     assert body["severity_band"] == band
     assert body["suggest_counsellor"] is suggest
-    assert body["crisis"] is False and body["helpline"] is None
+    assert body["crisis"] is False and body["crisis_response"] is None
     assert body["message"]
     assert "not a diagnosis" in body["disclaimer"]
 
@@ -98,13 +98,16 @@ def test_phq9_question9_above_zero_triggers_crisis(client, db, make_headers):
     body = response.json()
     assert body["crisis"] is True
     assert body["suggest_counsellor"] is True  # always, in a crisis
-    assert "14416" in body["helpline"]["tele_manas"]
-    assert body["helpline"]["campus_counsellor"]
+    crisis = body["crisis_response"]
+    assert any("14416" in h["contact"] for h in crisis["helplines"])
+    assert crisis["campus_counsellor"]
+    assert crisis["show_urgent_booking"] is True
     assert body["disclaimer"]
 
     alert = db.query(CrisisAlert).one()
     assert alert.source == AlertSource.assessment
     assert alert.status == AlertStatus.open
+    assert alert.excerpt == "PHQ-9 question 9 (thoughts of self-harm) answered: Several days"
 
 
 def test_no_crisis_alert_when_question9_is_zero(client, db, make_headers):

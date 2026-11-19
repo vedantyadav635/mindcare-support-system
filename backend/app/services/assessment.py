@@ -6,8 +6,8 @@ they do NOT diagnose anything. Every result includes DISCLAIMER.
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from app.config import settings
-from app.models import AlertSource, Assessment, AssessmentType, CrisisAlert, User
+from app.models import AlertSource, Assessment, AssessmentType, User
+from app.services import escalation
 
 STEM = "Over the last 2 weeks, how often have you been bothered by any of the following problems?"
 
@@ -76,27 +76,9 @@ def suggest_counsellor(band: str) -> bool:
     return band not in ("minimal", "mild")
 
 
-def get_helpline_info() -> dict:
-    # TODO(Step 7): move to services/safety.py so the chatbot and check-in crisis responses share it
-    return {
-        "message": "If you are thinking about harming yourself, please reach out now. You are not alone.",
-        "tele_manas": "Tele-MANAS (free, 24x7): 14416 or 1-800-891-4416",
-        "campus_counsellor": settings.CAMPUS_COUNSELLOR_CONTACT,
-    }
-
-
 def is_crisis(assessment_type: AssessmentType, answers: list[int]) -> bool:
     """Any answer above 0 on PHQ-9 question 9 is treated as a possible crisis, whatever the total score."""
     return assessment_type == AssessmentType.PHQ9 and answers[PHQ9_SELF_HARM_INDEX] > 0
-
-
-def raise_crisis_alert(db: Session, student: User) -> None:
-    """Create an open alert for counsellors (committed together with the assessment).
-
-    TODO(Step 7): the safety module should call one shared function for all sources
-    (chat, check-in, assessment) instead of each module creating CrisisAlert rows itself.
-    """
-    db.add(CrisisAlert(student_id=student.id, source=AlertSource.assessment, matched_rule="phq9_item9_self_harm"))
 
 
 def get_questions(assessment_type: AssessmentType) -> dict:
@@ -124,7 +106,14 @@ def submit_assessment(db: Session, student: User, assessment_type: AssessmentTyp
     )
     db.add(assessment)
     if crisis:
-        raise_crisis_alert(db, student)
+        item9_label = OPTIONS[answers[PHQ9_SELF_HARM_INDEX]]["label"]
+        escalation.create_crisis_alert(
+            db,
+            student_id=student.id,
+            source=AlertSource.assessment,
+            matched_rule="phq9_item9_self_harm",
+            excerpt=f"PHQ-9 question 9 (thoughts of self-harm) answered: {item9_label}",
+        )
     db.commit()  # the assessment and its alert are saved together
 
     return {
@@ -135,7 +124,7 @@ def submit_assessment(db: Session, student: User, assessment_type: AssessmentTyp
         "message": MESSAGES[band],
         "suggest_counsellor": suggest_counsellor(band) or crisis,
         "crisis": crisis,
-        "helpline": get_helpline_info() if crisis else None,
+        "crisis_response": escalation.crisis_response() if crisis else None,
         "disclaimer": DISCLAIMER,
     }
 

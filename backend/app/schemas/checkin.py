@@ -4,6 +4,7 @@ from datetime import date
 from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 from app.models import AnswerType, CheckinMetric
+from app.schemas.safety import CrisisResponseOut
 
 # Allowed answer values for each metric (these match the CHECK constraints on wellbeing_entries)
 METRIC_RANGES = {
@@ -103,6 +104,7 @@ class CheckinResult(BaseModel):
     stress: int | None
     sleep_hours: float | None
     crisis: bool  # true if a text answer looked high-risk
+    crisis_response: CrisisResponseOut | None  # helplines + urgent-booking flag, only when crisis
 
 
 class AnswerOut(BaseModel):

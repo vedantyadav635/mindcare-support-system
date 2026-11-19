@@ -2,9 +2,10 @@
 import enum
 
 from sqlalchemy import Enum, ForeignKey, String, Text
-from sqlalchemy.orm import Mapped, mapped_column
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from app.database import Base, IdTimestampMixin
+from app.models.user import User
 
 
 class ChatSender(str, enum.Enum):
@@ -53,9 +54,14 @@ class CrisisAlert(IdTimestampMixin, Base):
         ForeignKey("chat_messages.id", ondelete="SET NULL")
     )
     source: Mapped[AlertSource] = mapped_column(Enum(AlertSource, name="alert_source"))
-    matched_rule: Mapped[str] = mapped_column(String(100))  # which rule fired, e.g. "self_harm_keyword"
+    matched_rule: Mapped[str] = mapped_column(String(100))  # which rule fired, e.g. "want_to_die"
+    # Short excerpt shown to counsellors (never the full text). Stored here so it survives
+    # even if the source (e.g. a re-submitted check-in answer) is replaced later.
+    excerpt: Mapped[str | None] = mapped_column(String(200))
     status: Mapped[AlertStatus] = mapped_column(
         Enum(AlertStatus, name="alert_status"), server_default="open"
     )
     # Counsellor/admin who handled the alert
     handled_by: Mapped[int | None] = mapped_column(ForeignKey("users.id", ondelete="SET NULL"))
+
+    student: Mapped[User] = relationship(foreign_keys=[student_id])  # Python-side link, no schema change

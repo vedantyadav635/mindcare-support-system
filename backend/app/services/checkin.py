@@ -10,6 +10,7 @@ from sqlalchemy import func, select
 from sqlalchemy.orm import Session, selectinload
 
 from app.models import (
+    AlertSource,
     AnswerType,
     CheckinAnswer,
     CheckinMetric,
@@ -19,6 +20,7 @@ from app.models import (
     WellbeingEntry,
 )
 from app.schemas.checkin import AnswerOut, CheckinIn, CheckinResult, EntryOut, QuestionIn
+from app.services import escalation, safety
 
 SEED_FILE = Path(__file__).resolve().parent.parent / "data" / "seed_checkin_questions.json"
 
@@ -33,18 +35,6 @@ class QuestionNotFound(Exception):
 
 class MetricAlreadyUsed(Exception):
     """Another active question already fills this metric (HTTP 409)."""
-
-
-# ---------- Safety ----------
-
-def screen_text(text: str) -> dict:
-    """Check a text answer for crisis risk.
-
-    TODO(Step 7): replace this placeholder with safety.check(text), which returns
-    {"risk_level": "high"} for crisis language. Step 7 also creates the crisis alert
-    (source="checkin") and returns helpline content to the student.
-    """
-    return {"risk_level": "none"}
 
 
 # ---------- Questions ----------
@@ -139,7 +129,7 @@ def submit_checkin(db: Session, student: User, data: CheckinIn) -> CheckinResult
     answered_ids: set[int] = set()
     seen_ids: set[int] = set()
     metric_values: dict[CheckinMetric, float] = {}
-    crisis = False
+    risky: list[tuple[str, str]] = []  # (matched rule, answer text) for each high-risk answer
 
     for answer in data.answers:
         if answer.question_id in seen_ids:
@@ -169,8 +159,11 @@ def submit_checkin(db: Session, student: User, data: CheckinIn) -> CheckinResult
                 raise CheckinError(f"Answer to question {question.id} is longer than {question.max_length} characters")
             if not text:
                 continue  # a blank answer counts as not answered
-            risk = RiskLevel(screen_text(text)["risk_level"])
-            crisis = crisis or risk == RiskLevel.high
+            # SAFETY: every written answer is screened for crisis language
+            result = safety.check(text)
+            risk = RiskLevel(result["risk_level"])
+            if risk == RiskLevel.high:
+                risky.append((result["matched_rule"], text))
             new_answers.append(CheckinAnswer(question=question, text_answer=text, risk_level=risk))
 
         answered_ids.add(question.id)
@@ -201,7 +194,14 @@ def submit_checkin(db: Session, student: User, data: CheckinIn) -> CheckinResult
     entry.stress = int(stress) if stress is not None else None
     entry.sleep_hours = metric_values.get(CheckinMetric.sleep)
 
-    db.commit()
+    # One alert per risky answer; counsellors see only a short excerpt of that answer
+    for matched_rule, text in risky:
+        escalation.create_crisis_alert(
+            db, student_id=student.id, source=AlertSource.checkin, matched_rule=matched_rule, excerpt=text
+        )
+
+    db.commit()  # entry, answers and alerts are saved together
+    crisis = bool(risky)
     return CheckinResult(
         entry_id=entry.id,
         entry_date=entry.entry_date,
@@ -209,6 +209,7 @@ def submit_checkin(db: Session, student: User, data: CheckinIn) -> CheckinResult
         stress=entry.stress,
         sleep_hours=entry.sleep_hours,
         crisis=crisis,
+        crisis_response=escalation.crisis_response() if crisis else None,
     )
 
 

@@ -1,7 +1,11 @@
 """Test setup: runs every test against a separate test database (TEST_DATABASE_URL)."""
 import itertools
+import os
 
-import pytest
+# Must be set before app.config is imported: tests never download or run the AI models
+os.environ["NLP_ENABLED"] = "false"
+
+import pytest  # noqa: E402
 from fastapi.testclient import TestClient
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
@@ -45,22 +49,28 @@ def db():
 
 
 @pytest.fixture
-def make_headers(db):
-    """make_headers(UserRole.student) -> auth headers for a new user with that role (skips the login API)."""
+def make_user(db):
+    """make_user(UserRole.counsellor, "Dr. Rao") -> (user, auth headers). Skips the login API."""
     counter = itertools.count()
 
-    def _make(role: UserRole) -> dict:
+    def _make(role: UserRole, full_name: str = "Test User") -> tuple[User, dict]:
         user = User(
             email=f"{role.value}{next(counter)}@test.edu",
             password_hash="not-used",
-            full_name="Test User",
+            full_name=full_name,
             role=role,
         )
         db.add(user)
         db.commit()
-        return {"Authorization": f"Bearer {create_access_token(user.id, role.value)}"}
+        return user, {"Authorization": f"Bearer {create_access_token(user.id, role.value)}"}
 
     return _make
+
+
+@pytest.fixture
+def make_headers(make_user):
+    """make_headers(UserRole.student) -> auth headers for a new user with that role."""
+    return lambda role: make_user(role)[1]
 
 
 @pytest.fixture

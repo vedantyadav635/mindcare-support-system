@@ -1,0 +1,232 @@
+[
+  {
+    "id": "suicide_word",
+    "pattern": "\\b(suicide|suicidal|sucide|sucidal|suiside|suisidal|suicde)\\b",
+    "description": "Mentions suicide (any context is treated as a risk)"
+  },
+  {
+    "id": "kill_myself",
+    "pattern": "\\b(kill|killing|killed|hang|hanging|drown|drowning|poison|poisoning|shoot|shooting|stab|stabbing|end|ending) (myself|my self)\\b",
+    "description": "Talks about killing or ending themselves"
+  },
+  {
+    "id": "take_my_life",
+    "pattern": "\\b(take|taking|took|end|ending|finish|finishing) (my|my own) life\\b",
+    "description": "Talks about taking or ending their own life"
+  },
+  {
+    "id": "end_it_all",
+    "pattern": "\\b(end|ending|finish|finishing) (it all|everything|my existence)\\b",
+    "description": "Talks about ending it all"
+  },
+  {
+    "id": "going_to_end_it",
+    "pattern": "\\b(want|wanna|wana|going|gonna|ready|plan|planning|decided|about|think about|thinking about|thinking of) (to )?end it\\b",
+    "description": "Intends to 'end it'"
+  },
+  {
+    "id": "want_to_die",
+    "pattern": "\\b(want|wanna|wana|wish|wished|ready|going|gonna|plan|planning|deserve|decided|like|longing|need|trying|tried) (to )?(die|be dead|not be alive|not exist|stop existing|disappear forever)\\b",
+    "description": "Wants or plans to die"
+  },
+  {
+    "id": "should_die",
+    "pattern": "\\b(i|im|i am|i should|i must|i better|i might as well) (should|must|better|might as well|just|really)? ?(just )?(die|be dead)\\b",
+    "description": "Says they should die"
+  },
+  {
+    "id": "rather_be_dead",
+    "pattern": "\\b(rather be dead|rather die|better off dead|wish i (was|were) dead|wish i could die|wish i would die|wish i (could|would) just die)\\b",
+    "description": "Would rather be dead"
+  },
+  {
+    "id": "never_born",
+    "pattern": "\\b(never been born|was never born|were never born|wasnt born|werent born|had not been born)\\b",
+    "description": "Wishes they had never been born"
+  },
+  {
+    "id": "dont_want_to_live",
+    "pattern": "\\b(dont|do not|didnt|no longer|never|dont even|dont really) (want|wanna|wish) (to )?(live|be alive|exist|wake up)\\b",
+    "description": "Does not want to live or wake up"
+  },
+  {
+    "id": "no_reason_to_live",
+    "pattern": "\\b(no|nothing|not any|not a single|dont have a|dont have any|lost my|lost the|no more|zero) (reason|point|purpose|will|meaning) (to|in|for|of) (live|living|life|go on|going on|keep going|be alive|stay alive)\\b",
+    "description": "Sees no reason to live"
+  },
+  {
+    "id": "point_of_living",
+    "pattern": "\\bwhat(s| is)? the (point|use) (of|in) (living|life|being alive|going on|staying alive)\\b",
+    "description": "Questions the point of living"
+  },
+  {
+    "id": "life_not_worth_it",
+    "pattern": "\\b(not worth living|life (is|feels|seems)( so)? (pointless|meaningless|worthless|not worth it))\\b",
+    "description": "Feels life is not worth living"
+  },
+  {
+    "id": "cant_go_on",
+    "pattern": "\\b(cant|can not|cannot|unable to) (go on|keep going|keep living|live like this|live anymore|take it anymore|take this anymore|take life anymore|do this anymore)\\b",
+    "description": "Cannot go on"
+  },
+  {
+    "id": "never_wake_up",
+    "pattern": "\\b(never wake up|never waking up|not wake up again|sleep forever|sleep and never)\\b",
+    "description": "Wishes to never wake up"
+  },
+  {
+    "id": "burden",
+    "pattern": "\\b((im|i am|being|feel like|feeling like|become|became)( such| just| only)? (a |an )?(big |huge )?burden|burden (to|on|for) (everyone|everybody|my|others|people|them|you|all))\\b",
+    "description": "Feels like a burden"
+  },
+  {
+    "id": "better_without_me",
+    "pattern": "\\b(better|happier|easier) (off )?without me\\b",
+    "description": "Thinks others are better off without them"
+  },
+  {
+    "id": "no_one_would_miss_me",
+    "pattern": "\\b(no one|nobody|noone|no body) (would|will|is going to|gonna)( even)? (miss|notice|care)\\b",
+    "description": "Thinks no one would miss them"
+  },
+  {
+    "id": "self_harm",
+    "pattern": "\\b(self harm|selfharm|self harming|self injury|self injuring)\\b",
+    "description": "Mentions self-harm"
+  },
+  {
+    "id": "hurt_myself",
+    "pattern": "\\b(cut|cuts|cutting|burn|burned|burnt|burning|scratch|scratching|hurt|hurting|harm|harming|punish|punishing|starve|starving) (myself|my self)\\b",
+    "description": "Hurting themselves"
+  },
+  {
+    "id": "cut_body",
+    "pattern": "\\b(cut|cuts|cutting|burn|burned|burnt|burning|slit|slitting) my (wrist|wrists|arm|arms|thigh|thighs|skin|vein|veins|leg|legs)\\b",
+    "description": "Cutting or burning their body"
+  },
+  {
+    "id": "plan_to_die",
+    "pattern": "\\b(have|got|made|making|make|has|had) (a|the|my) plan (to|for) (die|dying|kill|end|suicide)\\b",
+    "description": "Has a plan"
+  },
+  {
+    "id": "collecting_means",
+    "pattern": "\\b(bought|collected|collecting|saved|saving|stocking|stockpiled|stockpiling|hoarding|have enough|got enough)( up)?( on)?( some| the| enough| a| my)? (sleeping )?(pills|tablets|rope|poison|rat poison|pesticide|blade|blades|razor|razors)\\b",
+    "description": "Collecting means (pills, rope, poison, blades)"
+  },
+  {
+    "id": "overdose",
+    "pattern": "\\b(overdose|overdosing|overdosed|od on)\\b",
+    "description": "Mentions overdose"
+  },
+  {
+    "id": "too_many_pills",
+    "pattern": "\\b(took|taken|take|taking|swallow|swallowed|swallowing|eat|ate) (too many|all (my|the|of my|of the)|a lot of|a bunch of|loads of|a handful of|the whole (bottle|strip|pack) of)( my| the)? (sleeping )?(pills|tablets|medicine|meds)\\b",
+    "description": "Taking too many pills"
+  },
+  {
+    "id": "how_to_die",
+    "pattern": "\\b(how (to|do i|can i|do you|would i|should i) (kill myself|die|end my life|commit suicide|overdose|hang myself)|(painless|easiest|quickest|fastest|best|easy|quick) (way|ways|method|methods) (to|of) (die|dying|suicide|kill myself|end it|end my life)|how many (sleeping )?(pills|tablets) (to|would|does it take|will|it takes))\\b",
+    "description": "Searching for ways to die"
+  },
+  {
+    "id": "jump_from_height",
+    "pattern": "\\bjump(ing|ed)? (off|from) (a |the |this |my |our )?(bridge|building|roof|rooftop|terrace|cliff|balcony|hostel|window|tower|floor)\\b",
+    "description": "Jumping from a height"
+  },
+  {
+    "id": "in_front_of_vehicle",
+    "pattern": "\\b(jump|jumping|throw myself|throwing myself|lie down|step|stepping) (in front of|under) (a |the )?(train|bus|truck|car|metro)\\b",
+    "description": "Jumping in front of a vehicle"
+  },
+  {
+    "id": "noose",
+    "pattern": "\\b(noose|hang from the|hang from a|hanging from the fan)\\b",
+    "description": "Mentions a noose or hanging"
+  },
+  {
+    "id": "goodbye_forever",
+    "pattern": "\\b((goodbye|good bye|bye) (forever|world|cruel world|for ever|for good)|(final|last) goodbye|(suicide|goodbye) (note|letter)|this is (my|the) last (message|goodbye))\\b",
+    "description": "Saying goodbye forever"
+  },
+  {
+    "id": "wont_be_here",
+    "pattern": "\\b(wont|will not|not going to|not gonna) be (here|around|alive) (tomorrow|anymore|much longer|for long|next week)\\b",
+    "description": "Says they won't be here much longer"
+  },
+  {
+    "id": "by_the_time_you_read",
+    "pattern": "\\bby the time (you|anyone|someone|u) (read|reads|see|sees|find|finds) (this|me)\\b",
+    "description": "Farewell-note language"
+  },
+  {
+    "id": "when_im_gone",
+    "pattern": "\\b((when|after|once) (im|i am) (gone|dead|no more)|(ill|i will) be (dead|gone forever))\\b",
+    "description": "Talks about being gone or dead"
+  },
+  {
+    "id": "giving_away",
+    "pattern": "\\b(giving|gave|give) away (all )?my (things|stuff|belongings|possessions)\\b",
+    "description": "Giving away belongings"
+  },
+  {
+    "id": "hi_mar_jana",
+    "pattern": "\\bmar (jana|jau|jaun|jaunga|jaungi|jaon|jaoon|ja|jaye|jata|jati|gaya hota|gayi hoti)\\b",
+    "description": "Hinglish: 'mar jaana' (to die)"
+  },
+  {
+    "id": "hi_marna_chahta",
+    "pattern": "\\bmar(na|ne|ni) (chahta|chahti|chahata|chahati|hai|he|ka man|ka dil|ki ichha|ki icha|ka plan|ka soch|ka socha|ka tarika|ke tarike)\\b",
+    "description": "Hinglish: wants to die ('marna chahta', 'marne ka mann')"
+  },
+  {
+    "id": "hi_jeene_ka_mann_nahi",
+    "pattern": "\\bj[ie]n[ae] (ka|ki|ke|ko) (koi )?(man|dil|ichha|icha|wajah|waja|matlab|maksad|reason|mood|fayda|faida) (nahi|nahin|nhi|nai|na|khatam|bacha|bachi)\\b",
+    "description": "Hinglish: no wish/reason to live ('jeene ka mann nahi')"
+  },
+  {
+    "id": "hi_jeena_nahi",
+    "pattern": "\\b(j[ie]n[ae] (nahi|nahin|nhi|nai) (chahta|chahti|chahata|chahati|hai|he|h|ab)|(nahi|nahin|nhi|nai) j[ie] (sakta|sakti|skta|skti|pa raha|pa rahi|paunga|paungi))\\b",
+    "description": "Hinglish: doesn't want to / can't live ('jeena nahi chahta')"
+  },
+  {
+    "id": "hi_khudkushi",
+    "pattern": "\\b(khudkushi|khudkhushi|khud kushi|khudkusi|khudkhusi|aatmhatya|atmhatya|aatmahatya|atmahatya)\\b",
+    "description": "Hinglish: suicide ('khudkushi', 'aatmhatya')"
+  },
+  {
+    "id": "hi_khud_ko_khatam",
+    "pattern": "\\b(khud|khudko|apne aap|apne ap|apneaap)( ko)? (maar|khatam|hurt|nuksan|nuksaan|chot|kaat|kat|jala)",
+    "description": "Hinglish: harm/end oneself ('khud ko khatam')"
+  },
+  {
+    "id": "hi_sab_khatam",
+    "pattern": "\\b(sab|sabkuch|sab kuch|zindagi|jindagi|zindgi|jindgi|life) (ko )?khatam kar",
+    "description": "Hinglish: end everything / life ('sab khatam kar dunga')"
+  },
+  {
+    "id": "hi_zindagi_se_thak",
+    "pattern": "\\b(zindagi|jindagi|zindgi|jindgi|life) se (thak|tang|bezar|bezaar|nafrat)",
+    "description": "Hinglish: tired/fed up of life ('zindagi se thak gaya')"
+  },
+  {
+    "id": "hi_bojh",
+    "pattern": "\\b(bojh|bojha|bhoj) (ban gaya|ban gayi|ban gya|hu|hoon|hun|hi hu|hi hoon)\\b",
+    "description": "Hinglish: feels like a burden ('bojh hoon')"
+  },
+  {
+    "id": "hi_mere_bina",
+    "pattern": "\\bmere bina (sab|sabhi|log|ghar wale|gharwale|family|sabko|duniya)( log)? (khush|behtar|better|acha|ache|achha|aaram)",
+    "description": "Hinglish: others better off without me ('mere bina sab khush')"
+  },
+  {
+    "id": "hi_alvida",
+    "pattern": "\\b(alvida|hamesha ke liye (ja|chala|chali|alvida|bye|so))",
+    "description": "Hinglish: goodbye forever ('alvida', 'hamesha ke liye')"
+  },
+  {
+    "id": "hi_means",
+    "pattern": "\\b(neend ki goli|nind ki goli|goliyan kha|goliya kha|(zeher|zehar|jeher|zahar|jahar) (kha|pi|pee|le|lunga|lungi)|phansi|fansi|faansi|phanda|fanda|nas kaat|nas kat|nasein kaat)",
+    "description": "Hinglish: means (sleeping pills, poison, hanging, cutting veins)"
+  }
+]

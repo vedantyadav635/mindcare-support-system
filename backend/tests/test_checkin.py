@@ -2,7 +2,7 @@ from datetime import date, timedelta
 
 import pytest
 
-from app.models import CheckinAnswer, UserRole, WellbeingEntry
+from app.models import AlertSource, CheckinAnswer, CrisisAlert, RiskLevel, UserRole, WellbeingEntry
 from app.services.checkin import seed_default_questions
 
 MOOD_QUESTION = {
@@ -193,6 +193,52 @@ def test_history_is_oldest_first_and_filtered_by_date(client, make_headers, ques
 
     since = (today - timedelta(days=3)).isoformat()
     assert len(client.get(f"/api/checkin/history?from={since}", headers=student).json()) == 2
+
+
+# ---------- Safety ----------
+
+def test_risky_text_answer_creates_alert_and_returns_crisis_response(client, db, make_headers, questions):
+    # ~140 chars: fits both text questions (max 200) but is longer than the 120-char excerpt
+    long_risky = "I have been feeling empty for weeks and honestly I want to end my life, " + "nothing helps " * 5
+    response = client.post(
+        "/api/checkin", json={"answers": answers_for(questions, text=long_risky)}, headers=make_headers(UserRole.student)
+    )
+    assert response.status_code == 200
+    body = response.json()
+    assert body["crisis"] is True
+    crisis = body["crisis_response"]
+    assert any("14416" in h["contact"] for h in crisis["helplines"])
+    assert any("112" in h["contact"] for h in crisis["helplines"])
+    assert crisis["show_urgent_booking"] is True
+
+    # Both text questions got the risky text -> both answers marked, one alert each
+    assert db.query(CheckinAnswer).filter_by(risk_level=RiskLevel.high).count() == 2
+    alerts = db.query(CrisisAlert).all()
+    assert len(alerts) == 2
+    assert all(a.source == AlertSource.checkin and a.matched_rule == "take_my_life" for a in alerts)
+    # Counsellors only get a short excerpt, not the whole answer
+    assert all(len(a.excerpt) <= 121 and a.excerpt.endswith("…") for a in alerts)
+
+
+def test_normal_checkin_has_no_alert(client, db, make_headers, questions):
+    body = client.post(
+        "/api/checkin",
+        json={"answers": answers_for(questions, text="Exams are stressful but I'm managing")},
+        headers=make_headers(UserRole.student),
+    ).json()
+    assert body["crisis"] is False and body["crisis_response"] is None
+    assert db.query(CrisisAlert).count() == 0
+    assert db.query(CheckinAnswer).filter_by(risk_level=RiskLevel.high).count() == 0
+
+
+def test_hinglish_risky_answer_is_caught(client, db, make_headers, questions):
+    body = client.post(
+        "/api/checkin",
+        json={"answers": answers_for(questions, text="jeene ka mann nahi karta")},
+        headers=make_headers(UserRole.student),
+    ).json()
+    assert body["crisis"] is True
+    assert db.query(CrisisAlert).count() == 2
 
 
 # ---------- Trends ----------

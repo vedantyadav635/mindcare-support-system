@@ -5,6 +5,7 @@ from typing import Annotated
 from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 from app.models import AssessmentType
+from app.schemas.safety import CrisisResponseOut
 from app.services.assessment import QUESTIONS
 
 # Each answer is 0 (Not at all) .. 3 (Nearly every day)
@@ -41,12 +42,6 @@ class QuestionsOut(BaseModel):
     disclaimer: str
 
 
-class HelplineOut(BaseModel):
-    message: str
-    tele_manas: str
-    campus_counsellor: str
-
-
 class AssessmentResult(BaseModel):
     id: int
     type: AssessmentType
@@ -55,7 +50,7 @@ class AssessmentResult(BaseModel):
     message: str
     suggest_counsellor: bool
     crisis: bool
-    helpline: HelplineOut | None  # only when crisis is true
+    crisis_response: CrisisResponseOut | None  # only when crisis is true
     disclaimer: str
 
 
