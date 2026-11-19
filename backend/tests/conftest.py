@@ -27,10 +27,16 @@ def create_test_tables():
 
 @pytest.fixture
 def db():
+    """A DB session for one test. Afterwards every row is deleted, so each test starts empty."""
     session = TestSessionLocal()
     try:
         yield session
     finally:
+        session.rollback()
+        # Children before parents (reverse dependency order) so foreign keys are not violated
+        for table in reversed(Base.metadata.sorted_tables):
+            session.execute(table.delete())
+        session.commit()
         session.close()
 
 
