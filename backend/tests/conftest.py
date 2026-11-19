@@ -12,6 +12,7 @@ from sqlalchemy.orm import sessionmaker
 
 import app.models  # noqa: F401  (registers every table on Base.metadata)
 from app.config import settings
+from app.core.rate_limit import email_limiter, ip_limiter
 from app.core.security import create_access_token
 from app.database import Base, get_db
 from app.main import app
@@ -20,7 +21,7 @@ from app.models import User, UserRole
 if not settings.TEST_DATABASE_URL:
     raise RuntimeError("Set TEST_DATABASE_URL in backend/.env before running tests")
 
-test_engine = create_engine(settings.TEST_DATABASE_URL)
+test_engine = create_engine(settings.TEST_DATABASE_URL, hide_parameters=True)
 TestSessionLocal = sessionmaker(bind=test_engine, autoflush=False, expire_on_commit=False)
 
 
@@ -77,6 +78,8 @@ def make_headers(make_user):
 def client(db):
     """HTTP client whose requests use the test database instead of the real one."""
     app.dependency_overrides[get_db] = lambda: db
+    email_limiter.clear()  # every test starts with no failed logins recorded
+    ip_limiter.clear()
     with TestClient(app) as c:
         yield c
     app.dependency_overrides.clear()

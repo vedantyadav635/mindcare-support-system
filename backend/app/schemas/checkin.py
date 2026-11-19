@@ -26,6 +26,15 @@ class OptionIn(BaseModel):
 class QuestionIn(BaseModel):
     """Used for both create (POST) and full update (PUT)."""
 
+    model_config = ConfigDict(json_schema_extra={"examples": [
+        {
+            "text": "How motivated did you feel today?", "answer_type": "option", "metric": "none",
+            "options": [{"label": "Not at all", "value": 1}, {"label": "Somewhat", "value": 2}, {"label": "Very", "value": 3}],
+            "is_required": True, "display_order": 8,
+        },
+        {"text": "Anything else you want to share?", "answer_type": "text", "is_required": False, "max_length": 300, "display_order": 9},
+    ]})
+
     text: str = Field(min_length=1, max_length=300)
     answer_type: AnswerType
     options: list[OptionIn] | None = None
@@ -93,6 +102,17 @@ class AnswerIn(BaseModel):
 
 
 class CheckinIn(BaseModel):
+    model_config = ConfigDict(json_schema_extra={"examples": [{
+        "answers": [
+            {"question_id": 1, "option_value": 4},
+            {"question_id": 2, "option_value": 2},
+            {"question_id": 3, "option_value": 6.5},
+            {"question_id": 4, "option_value": 3},
+            {"question_id": 5, "option_value": 1},
+            {"question_id": 6, "text_answer": "Exams next week, a bit nervous"},
+        ]
+    }]})
+
     entry_date: date | None = None  # defaults to today
     answers: list[AnswerIn]
 

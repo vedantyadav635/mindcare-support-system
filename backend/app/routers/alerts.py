@@ -19,7 +19,8 @@ def list_alerts(
     db: Session = Depends(get_db),
     _: User = Depends(counsellor_only),
 ):
-    """Newest first, with the student's name and a short excerpt only."""
+    """Counsellors only. Crisis alerts, newest first, with the student's name, why it was flagged
+    (`reason`) and a short excerpt only, never the full text. Filter with `?status=open`."""
     return service.list_alerts(db, status)
 
 
@@ -27,6 +28,7 @@ def list_alerts(
 def update_alert(
     alert_id: int, data: AlertUpdate, db: Session = Depends(get_db), counsellor: User = Depends(counsellor_only)
 ):
+    """Counsellors only. Set the status (open / seen / closed); records you as `handled_by`."""
     try:
         return service.update_alert_status(db, counsellor, alert_id, data.status)
     except service.AlertNotFound:

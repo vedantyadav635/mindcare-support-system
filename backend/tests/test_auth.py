@@ -1,3 +1,4 @@
+import pytest
 from fastapi import Depends
 
 from app.core.deps import require_role
@@ -100,6 +101,49 @@ def test_student_cannot_access_admin_route(client):
     register(client)
     token = login_token(client, "student@college.edu", "secret123")
     assert client.get("/api/test/admin-only", headers=auth_header(token)).status_code == 403
+
+
+def test_login_is_blocked_after_5_wrong_passwords(client):
+    register(client)
+    for _ in range(5):
+        bad = client.post("/api/auth/login", json={"email": "student@college.edu", "password": "wrongpass"})
+        assert bad.status_code == 401
+    # Even the correct password is refused now, with a Retry-After header
+    blocked = client.post("/api/auth/login", json={"email": "student@college.edu", "password": "secret123"})
+    assert blocked.status_code == 429
+    assert int(blocked.headers["Retry-After"]) > 0
+
+
+def test_successful_login_clears_failed_attempts(client):
+    register(client)
+    for _ in range(4):
+        client.post("/api/auth/login", json={"email": "student@college.edu", "password": "wrongpass"})
+    assert client.post("/api/auth/login", json={"email": "student@college.edu", "password": "secret123"}).status_code == 200
+    for _ in range(4):  # the counter started again from zero
+        assert client.post("/api/auth/login", json={"email": "student@college.edu", "password": "wrongpass"}).status_code == 401
+
+
+def test_one_ip_is_blocked_after_20_failures_across_emails(client):
+    for i in range(20):
+        client.post("/api/auth/login", json={"email": f"guess{i}@college.edu", "password": "whatever"})
+    assert client.post("/api/auth/login", json={"email": "new@college.edu", "password": "whatever"}).status_code == 429
+
+
+def test_app_refuses_a_weak_jwt_secret():
+    from pydantic import ValidationError
+
+    from app.config import Settings
+
+    with pytest.raises(ValidationError):
+        Settings(DATABASE_URL="postgresql+psycopg2://x", JWT_SECRET="change-me")
+
+
+def test_cors_allows_only_the_frontend_origin(client):
+    preflight = {"Access-Control-Request-Method": "POST", "Access-Control-Request-Headers": "authorization"}
+    allowed = client.options("/api/auth/login", headers={"Origin": "http://localhost:5173", **preflight})
+    assert allowed.headers.get("access-control-allow-origin") == "http://localhost:5173"
+    evil = client.options("/api/auth/login", headers={"Origin": "http://evil.example", **preflight})
+    assert "access-control-allow-origin" not in evil.headers
 
 
 def test_admin_can_access_admin_route(client, db):

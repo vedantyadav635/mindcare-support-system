@@ -14,6 +14,11 @@ Tag = Literal[
 class ResourceIn(BaseModel):
     """Used for both create (POST) and full update (PUT)."""
 
+    model_config = ConfigDict(json_schema_extra={"examples": [{
+        "title": "Two-minute stretch break", "type": "activity", "tags": ["stress", "academic"],
+        "body": "Stand up, roll your shoulders back five times, stretch your arms above your head and take three slow breaths.",
+    }]})
+
     title: str = Field(min_length=1, max_length=200)
     type: ResourceType
     body: str | None = Field(default=None, max_length=3000)

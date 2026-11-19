@@ -13,6 +13,11 @@ AnswerValue = Annotated[int, Field(ge=0, le=3)]
 
 
 class AssessmentIn(BaseModel):
+    model_config = ConfigDict(json_schema_extra={"examples": [
+        {"type": "GAD7", "answers": [1, 2, 1, 0, 1, 2, 0]},
+        {"type": "PHQ9", "answers": [1, 1, 2, 1, 0, 1, 1, 0, 0]},
+    ]})
+
     type: AssessmentType
     answers: list[AnswerValue]
 

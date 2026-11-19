@@ -1,6 +1,7 @@
 """App settings, read from backend/.env (never hard-code secrets)."""
 from pathlib import Path
 
+from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 # backend/.env, found relative to this file so it works from any working directory
@@ -13,7 +14,9 @@ class Settings(BaseSettings):
     DATABASE_URL: str
     TEST_DATABASE_URL: str | None = None  # only needed when running pytest
 
-    JWT_SECRET: str
+    # At least 32 characters, so tokens can't be forged by guessing the secret.
+    # The app refuses to start with a short one (e.g. the "change-me" placeholder).
+    JWT_SECRET: str = Field(min_length=32)
     JWT_ALGORITHM: str = "HS256"
     JWT_EXPIRE_MINUTES: int = 60
 

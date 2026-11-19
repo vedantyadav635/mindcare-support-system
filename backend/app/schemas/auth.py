@@ -7,6 +7,11 @@ from app.models import UserRole
 
 
 class RegisterIn(BaseModel):
+    model_config = ConfigDict(json_schema_extra={"examples": [{
+        "email": "asha@college.edu", "password": "secret123", "full_name": "Asha Patel",
+        "enrollment_no": "EN2024001", "department": "Computer Science", "year": 2, "consent_given": True,
+    }]})
+
     email: EmailStr
     # bcrypt only uses the first 72 bytes of a password, so we cap it there
     password: str = Field(min_length=8, max_length=72)
@@ -25,8 +30,10 @@ class RegisterIn(BaseModel):
 
 
 class LoginIn(BaseModel):
+    model_config = ConfigDict(json_schema_extra={"examples": [{"email": "asha@college.edu", "password": "secret123"}]})
+
     email: EmailStr
-    password: str
+    password: str = Field(min_length=1, max_length=128)
 
 
 class TokenOut(BaseModel):

@@ -1,7 +1,7 @@
 """Shapes for the crisis response (shown to students) and crisis alerts (shown to counsellors)."""
 from datetime import datetime
 
-from pydantic import BaseModel
+from pydantic import BaseModel, ConfigDict
 
 from app.models import AlertSource, AlertStatus
 
@@ -32,4 +32,6 @@ class AlertOut(BaseModel):
 
 
 class AlertUpdate(BaseModel):
+    model_config = ConfigDict(json_schema_extra={"examples": [{"status": "seen"}, {"status": "closed"}]})
+
     status: AlertStatus

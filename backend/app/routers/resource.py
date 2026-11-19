@@ -21,16 +21,19 @@ def list_resources(
     db: Session = Depends(get_db),
     _: User = Depends(get_current_user),
 ):
+    """Any logged-in user. Active resources, optionally filtered by `type` and/or `tag`."""
     return service.list_resources(db, type, tag)
 
 
 @router.post("", response_model=ResourceOut, status_code=status.HTTP_201_CREATED)
 def create_resource(data: ResourceIn, db: Session = Depends(get_db), _: User = Depends(admin_only)):
+    """Admin only. Needs a body or a url. Tags must come from the allowed list."""
     return service.create_resource(db, data)
 
 
 @router.put("/{resource_id}", response_model=ResourceOut)
 def update_resource(resource_id: int, data: ResourceIn, db: Session = Depends(get_db), _: User = Depends(admin_only)):
+    """Admin only. Replaces the whole resource. Set `is_active: true` to restore a deleted one."""
     try:
         return service.update_resource(db, resource_id, data)
     except service.ResourceNotFound:
@@ -39,6 +42,7 @@ def update_resource(resource_id: int, data: ResourceIn, db: Session = Depends(ge
 
 @router.delete("/{resource_id}", status_code=status.HTTP_204_NO_CONTENT)
 def delete_resource(resource_id: int, db: Session = Depends(get_db), _: User = Depends(admin_only)):
+    """Admin only. Soft delete: hidden from students, kept so it can be restored."""
     try:
         service.deactivate_resource(db, resource_id)
     except service.ResourceNotFound:

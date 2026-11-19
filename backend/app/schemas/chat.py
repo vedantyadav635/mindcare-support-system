@@ -9,6 +9,8 @@ from app.schemas.safety import CrisisResponseOut
 
 
 class ChatIn(BaseModel):
+    model_config = ConfigDict(json_schema_extra={"examples": [{"text": "I'm really stressed about my exams next week"}]})
+
     text: str = Field(min_length=1, max_length=1000)
 
     @field_validator("text")

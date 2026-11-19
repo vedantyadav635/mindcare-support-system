@@ -18,5 +18,6 @@ def trends(
     db: Session = Depends(get_db),
     student: User = Depends(require_role(UserRole.student)),
 ):
-    """week: one point per day for the last 7 days. month: weekly averages for the last 30 days."""
+    """Students only, own data. `week`: one point per day for the last 7 days (null = no check-in).
+    `month`: weekly averages for the last 30 days. Both include a summary with averages and streak."""
     return service.get_trends(db, student.id, period)

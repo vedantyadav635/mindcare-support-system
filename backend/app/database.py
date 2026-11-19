@@ -6,8 +6,10 @@ from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, sessionmaker
 
 from app.config import settings
 
-# pool_pre_ping checks a connection is alive before using it
-engine = create_engine(settings.DATABASE_URL, pool_pre_ping=True)
+# pool_pre_ping: check a connection is alive before using it.
+# hide_parameters: database error messages (and so the server logs) never contain the
+# values we sent, e.g. chat text or password hashes.
+engine = create_engine(settings.DATABASE_URL, pool_pre_ping=True, hide_parameters=True)
 SessionLocal = sessionmaker(bind=engine, autoflush=False, expire_on_commit=False)
 
 

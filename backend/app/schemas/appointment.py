@@ -9,6 +9,10 @@ from app.models import AppointmentStatus
 # ---------- Slots ----------
 
 class SlotIn(BaseModel):
+    model_config = ConfigDict(json_schema_extra={"examples": [
+        {"start_time": "2026-12-01T10:00:00+05:30", "end_time": "2026-12-01T10:45:00+05:30"}
+    ]})
+
     # AwareDatetime rejects times without a timezone, e.g. "2026-12-01T10:00:00+05:30" is required
     start_time: AwareDatetime
     end_time: AwareDatetime
@@ -42,6 +46,8 @@ class CounsellorOut(BaseModel):
 # ---------- Appointments ----------
 
 class BookingIn(BaseModel):
+    model_config = ConfigDict(json_schema_extra={"examples": [{"slot_id": 1, "reason": "Feeling stressed about exams and not sleeping well"}]})
+
     slot_id: int
     reason: str = Field(min_length=1, max_length=1000)
 
@@ -49,6 +55,12 @@ class BookingIn(BaseModel):
 class AppointmentUpdate(BaseModel):
     """status: the new status (optional, so a counsellor can update only the notes).
     counsellor_notes: counsellors only."""
+
+    model_config = ConfigDict(json_schema_extra={"examples": [
+        {"status": "confirmed"},
+        {"status": "completed", "counsellor_notes": "Discussed exam anxiety; follow up in two weeks."},
+        {"status": "cancelled"},
+    ]})
 
     status: AppointmentStatus | None = None
     counsellor_notes: str | None = Field(default=None, max_length=5000)
