@@ -3,7 +3,7 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.config import settings
-from app.routers import auth, checkin, wellbeing
+from app.routers import assessment, auth, checkin, wellbeing
 
 app = FastAPI(title="MindCare Student Support API")
 
@@ -19,6 +19,7 @@ app.add_middleware(
 app.include_router(auth.router)
 app.include_router(checkin.router)
 app.include_router(wellbeing.router)
+app.include_router(assessment.router)
 
 
 @app.get("/api/health")

@@ -17,6 +17,9 @@ class Settings(BaseSettings):
     JWT_ALGORITHM: str = "HS256"
     JWT_EXPIRE_MINUTES: int = 60
 
+    # Shown to students in crisis responses (not a secret, but differs per college)
+    CAMPUS_COUNSELLOR_CONTACT: str = "Campus Counselling Centre (see your college website for the number)"
+
     # Comma-separated, e.g. "http://localhost:5173,http://127.0.0.1:5173"
     CORS_ORIGINS: str = "http://localhost:5173"
 
