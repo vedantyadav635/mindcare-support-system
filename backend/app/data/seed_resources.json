@@ -1,0 +1,110 @@
+[
+  {
+    "title": "Box breathing",
+    "type": "breathing",
+    "tags": ["stress", "anxiety"],
+    "body": "Breathe in through your nose for 4 seconds. Hold for 4 seconds. Breathe out slowly for 4 seconds. Hold for 4 seconds. Repeat 4 times. Many people find this helps them feel calmer before an exam or a hard conversation."
+  },
+  {
+    "title": "4-7-8 breathing",
+    "type": "breathing",
+    "tags": ["sleep", "stress", "anxiety"],
+    "body": "Breathe in quietly through your nose for 4 seconds. Hold your breath for 7 seconds. Breathe out slowly through your mouth for 8 seconds. Do this 3 to 4 times. Some people use it to relax when they lie down to sleep."
+  },
+  {
+    "title": "Slow belly breathing",
+    "type": "breathing",
+    "tags": ["anxiety", "anger", "stress"],
+    "body": "Put one hand on your chest and one on your belly. Breathe in slowly so that only your belly rises. Breathe out a little longer than you breathed in. Try this for 2 minutes whenever you feel tense or upset."
+  },
+  {
+    "title": "5-4-3-2-1 grounding",
+    "type": "activity",
+    "tags": ["anxiety", "fear", "stress"],
+    "body": "When your thoughts are racing, notice 5 things you can see, 4 things you can touch, 3 things you can hear, 2 things you can smell and 1 thing you can taste. This brings your attention back to the present moment."
+  },
+  {
+    "title": "Progressive muscle relaxation",
+    "type": "activity",
+    "tags": ["stress", "sleep", "anxiety"],
+    "body": "Starting with your feet, tighten the muscles for 5 seconds, then let go and notice the difference for 10 seconds. Move slowly up through your legs, stomach, hands, arms, shoulders and face. It takes about 10 minutes."
+  },
+  {
+    "title": "Sleep hygiene tips",
+    "type": "sleep",
+    "tags": ["sleep"],
+    "body": "Try to sleep and wake up at the same time every day, even on weekends. Keep your phone away for 30 minutes before bed. Avoid tea, coffee and energy drinks late in the day. Keep your room dark, quiet and cool."
+  },
+  {
+    "title": "A simple wind-down routine",
+    "type": "sleep",
+    "tags": ["sleep", "stress"],
+    "body": "An hour before bed, stop studying and dim the lights. Have a warm shower, read something light, or listen to calm music. Write down tomorrow's tasks so they don't keep running in your head."
+  },
+  {
+    "title": "Pomodoro study breaks",
+    "type": "activity",
+    "tags": ["academic", "stress"],
+    "body": "Study for 25 minutes with your phone away, then take a 5-minute break: stand up, stretch or drink water. After 4 rounds, take a longer 20-minute break. Short, focused sessions are often easier than long, tiring ones."
+  },
+  {
+    "title": "Planning a busy exam week",
+    "type": "article",
+    "tags": ["academic", "stress", "anxiety"],
+    "body": "List every exam and deadline. Break each subject into small topics and spread them across the days. Plan time for meals, sleep and short breaks too. Tick off topics as you finish them, so you can see your progress."
+  },
+  {
+    "title": "Journaling prompt",
+    "type": "activity",
+    "tags": ["low_mood", "sadness", "stress"],
+    "body": "Take 10 minutes and write freely about: What am I feeling right now? What made today hard? What is one small thing I can do for myself tomorrow? There are no right or wrong answers, and no one else needs to read it."
+  },
+  {
+    "title": "Three good things",
+    "type": "activity",
+    "tags": ["low_mood", "sadness"],
+    "body": "Before sleeping, write down three things that went well today, however small: a good meal, a kind message, finishing a task. Next to each, write why it happened. Doing this for a week can help you notice the good moments."
+  },
+  {
+    "title": "Take a short walk",
+    "type": "activity",
+    "tags": ["low_mood", "stress", "anger"],
+    "body": "A 10 to 15 minute walk outside, especially in daylight or near trees, can be a good break for your mind. Leave your earphones out for a few minutes and notice what is around you."
+  },
+  {
+    "title": "Talk to someone you trust",
+    "type": "activity",
+    "tags": ["loneliness", "sadness", "low_mood"],
+    "body": "Call or meet a friend, family member or roommate, even for 10 minutes. You don't have to explain everything; saying 'I'm having a tough week' is enough to start. Sharing how you feel can make it feel lighter."
+  },
+  {
+    "title": "Finding your people on campus",
+    "type": "article",
+    "tags": ["loneliness"],
+    "body": "Joining a club, sports team, volunteering group or study group is an easy way to meet people with similar interests. Start with one activity you enjoy and go regularly. Friendships usually grow slowly, so be patient with yourself."
+  },
+  {
+    "title": "Cooling down when you feel angry",
+    "type": "article",
+    "tags": ["anger"],
+    "body": "When you notice anger rising, pause before you reply. Step away if you can, take a few slow breaths, or count to ten. Come back to the conversation when you feel calmer, and talk about how you feel instead of blaming."
+  },
+  {
+    "title": "When worries feel too big",
+    "type": "article",
+    "tags": ["anxiety", "fear"],
+    "body": "Write the worry down. Ask yourself: Is this in my control? If yes, write one small step you can take. If no, try to let it go for now. Setting aside 15 minutes of 'worry time' each day can stop worries from filling the whole day."
+  },
+  {
+    "title": "Book a session with a counsellor",
+    "type": "counselling",
+    "tags": ["low_mood", "stress", "anxiety", "sadness", "loneliness", "academic", "anger", "fear"],
+    "body": "Our campus counsellors are here to listen, in confidence. You don't need a big reason to talk to one. Open the Appointments section to see available times and book a session."
+  },
+  {
+    "title": "Tele-MANAS: free 24x7 mental health helpline",
+    "type": "counselling",
+    "tags": ["crisis"],
+    "body": "If you feel unsafe or are thinking about harming yourself, please reach out now. Call Tele-MANAS, the Government of India's free mental health helpline, at 14416 or 1-800-891-4416, any time of day or night. You can also contact the campus counsellor. In an emergency, call 112."
+  }
+]
