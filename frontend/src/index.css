@@ -1,0 +1,141 @@
+@import "tailwindcss";
+
+/*
+ * DESIGN TOKENS (Tailwind v4 keeps the theme here, in CSS).
+ * Every colour, font, radius, shadow and text size in the app comes from this block.
+ * Components use the generated classes (bg-brand-500, rounded-lg, shadow-soft, text-h2, ...),
+ * never raw hex values.
+ */
+@theme {
+  /* Remove Tailwind's default palette so only our tokens can be used */
+  --color-*: initial;
+  --color-white: #ffffff;
+
+  /* Brand orange: the ONE bright accent */
+  --color-brand-50: #fff4ea;
+  --color-brand-100: #ffe3c7;
+  --color-brand-300: #ffb070;
+  --color-brand-500: #ff7a1a; /* primary */
+  --color-brand-600: #e8650a; /* pressed */
+  --color-brand-700: #c25206; /* small orange text, on white only */
+
+  /* Surfaces */
+  --color-cream: #fff9f2; /* page background */
+  --color-surface: #ffffff; /* cards */
+  --color-sand: #f7ede2; /* soft section background */
+
+  /* Text and lines */
+  --color-ink-900: #2b2a33; /* headings, text on orange */
+  --color-ink-700: #4a4855; /* body and helper text */
+  --color-ink-500: #7a7787; /* icons, disabled, decoration only (fails AA as text) */
+  --color-line: #ede4da; /* borders */
+
+  /* Soft accents (tiles, charts, decoration) */
+  --color-sky: #8fc6f2;
+  --color-lilac: #b9a6f5;
+  --color-mint: #8ed9b5;
+  --color-sun: #ffd25e;
+  --color-blush: #ffa9b9;
+
+  /* Status (as dots, borders and icons; danger only for crisis and errors) */
+  --color-success: #2e9e6b;
+  --color-warning: #e8a317;
+  --color-danger: #d64545;
+
+  /* Mood scale 1 (very low) .. 5 (very good) */
+  --color-mood-1: #b9a6f5;
+  --color-mood-2: #8fc6f2;
+  --color-mood-3: #ffd25e;
+  --color-mood-4: #ffb070;
+  --color-mood-5: #8ed9b5;
+
+  /* Fonts */
+  --font-heading: "Nunito", ui-rounded, system-ui, sans-serif;
+  --font-body: "Nunito Sans", system-ui, sans-serif;
+  --font-sans: "Nunito Sans", system-ui, sans-serif;
+
+  /* Type scale: size / line height / weight */
+  --text-display: 3rem;
+  --text-display--line-height: 3.5rem;
+  --text-display--font-weight: 800;
+  --text-display-sm: 2.25rem; /* display on mobile */
+  --text-display-sm--line-height: 2.75rem;
+  --text-display-sm--font-weight: 800;
+  --text-h1: 2.25rem;
+  --text-h1--line-height: 2.75rem;
+  --text-h1--font-weight: 800;
+  --text-h2: 1.75rem;
+  --text-h2--line-height: 2.25rem;
+  --text-h2--font-weight: 800;
+  --text-h3: 1.375rem;
+  --text-h3--line-height: 1.875rem;
+  --text-h3--font-weight: 700;
+  --text-body: 1.0625rem; /* 17px */
+  --text-body--line-height: 1.75rem;
+  --text-small: 0.875rem;
+  --text-small--line-height: 1.25rem;
+
+  /* Corners */
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 24px; /* cards */
+  --radius-xl: 32px; /* hero panels */
+  --radius-pill: 9999px; /* buttons, chips, inputs */
+
+  /* Shadows */
+  --shadow-soft: 0 8px 24px rgba(43, 42, 51, 0.06);
+  --shadow-lift: 0 12px 32px rgba(43, 42, 51, 0.1);
+
+  /* Layout: content max width 1120px (spacing uses Tailwind's 4px steps; we use multiples of 8px) */
+  --container-content: 70rem;
+
+  /* Motion: short and gentle */
+  --default-transition-duration: 180ms;
+  --default-transition-timing-function: cubic-bezier(0, 0, 0.2, 1); /* ease-out */
+  --animate-float: float 12s ease-in-out infinite;
+  --animate-fade-up: fade-up 200ms ease-out both;
+  --animate-pop-in: pop-in 180ms ease-out both;
+
+  @keyframes float {
+    0%, 100% { transform: translate(0, 0); }
+    50% { transform: translate(8px, -12px); }
+  }
+  @keyframes fade-up {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: none; }
+  }
+  @keyframes pop-in {
+    from { opacity: 0; transform: scale(0.96); }
+    to { opacity: 1; transform: none; }
+  }
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    @apply bg-cream font-body text-body text-ink-700 antialiased;
+  }
+  h1, h2, h3, h4 {
+    @apply font-heading text-ink-900;
+  }
+  h1 { @apply text-h1; }
+  h2 { @apply text-h2; }
+  h3 { @apply text-h3; }
+
+  /* Visible keyboard focus everywhere (mouse clicks don't show it) */
+  :focus-visible {
+    @apply outline-3 outline-offset-2 outline-ink-900;
+  }
+}
+
+/* Respect "reduce motion" in the device settings */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
