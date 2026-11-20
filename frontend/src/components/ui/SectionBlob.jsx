@@ -3,11 +3,12 @@ import { cx } from "./cx";
 /**
  * SectionBlob: flat decorative shapes (original, drawn from basic SVG). Always hidden from screen readers.
  *   shape: "blob" | "circle" | "ring" | "arc" | "star" | "smile" (a simple smiling-circle character)
- *   color: "brand" | "sky" | "lilac" | "mint" | "sun" | "blush" | "sand"
+ *   color: "orange" | "brand" (light orange) | "sky" | "lilac" | "mint" | "sun" | "blush" | "sand"
  *   float: drifts slowly (off when the user prefers reduced motion)
  * Position it with className, e.g. "absolute -right-8 top-4 size-40".
  */
 const FILL = {
+  orange: "fill-brand-500", // the bright accent (used for the smiling character)
   brand: "fill-brand-300",
   sky: "fill-sky",
   lilac: "fill-lilac",
@@ -17,6 +18,7 @@ const FILL = {
   sand: "fill-sand",
 };
 const STROKE = {
+  orange: "stroke-brand-500",
   brand: "stroke-brand-300",
   sky: "stroke-sky",
   lilac: "stroke-lilac",

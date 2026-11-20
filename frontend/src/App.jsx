@@ -24,7 +24,7 @@ import Assessments from "./pages/student/Assessments";
 import AssessmentTake from "./pages/student/AssessmentTake";
 import Chat from "./pages/student/Chat";
 import CheckIn from "./pages/student/CheckIn";
-import Help from "./pages/student/Help";
+import Help from "./pages/Help";
 import StudentHome from "./pages/student/Home";
 import Resources from "./pages/student/Resources";
 import Trends from "./pages/student/Trends";
@@ -57,6 +57,8 @@ export default function App() {
           <Route path="/" element={<Landing />} />
           <Route path="/login" element={<GuestOnly><Login /></GuestOnly>} />
           <Route path="/register" element={<GuestOnly><Register /></GuestOnly>} />
+          {/* Crisis help without logging in */}
+          <Route path="/help" element={<Help />} />
         </Route>
 
         {/* Crisis screen: open to every logged-in role (the "Need help now?" pill is on every page) */}

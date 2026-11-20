@@ -18,7 +18,7 @@ export const NAVIGATION = {
     { to: "/counsellor", label: "Home", icon: House, end: true },
     { to: "/counsellor/appointments", label: "Appointments", icon: CalendarHeart },
     { to: "/counsellor/availability", label: "Availability", icon: CalendarClock },
-    { to: "/counsellor/alerts", label: "Alerts", icon: ShieldAlert },
+    { to: "/counsellor/alerts", label: "Alerts", icon: ShieldAlert, badge: "alerts" }, // badge = open alert count
   ],
   admin: [
     { to: "/admin", label: "Overview", icon: HeartPulse, end: true },

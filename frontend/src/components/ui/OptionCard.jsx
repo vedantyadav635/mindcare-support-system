@@ -6,10 +6,13 @@ import { cx } from "./cx";
  * Put a group of them inside <fieldset> with a <legend> (the question).
  *
  * <OptionCard name="mood" value={4} checked={mood === 4} onChange={() => setMood(4)} emoji="🙂" label="Good" />
+ *   swatch:  optional background class for a coloured circle behind the emoji, e.g. "bg-mood-4"
+ *   onClick: runs when the card is clicked (used to move on after a tap)
  */
-export default function OptionCard({ name, value, checked, onChange, label, description, emoji, className }) {
+export default function OptionCard({ name, value, checked, onChange, onClick, label, description, emoji, swatch, className }) {
   return (
     <label
+      onClick={onClick}
       className={cx(
         "group relative flex cursor-pointer items-center gap-4 rounded-lg border-2 bg-surface p-4 transition md:p-5",
         "hover:-translate-y-0.5 hover:shadow-soft",
@@ -21,7 +24,10 @@ export default function OptionCard({ name, value, checked, onChange, label, desc
     >
       <input type="radio" name={name} value={value} checked={checked} onChange={onChange} className="sr-only" />
       {emoji && (
-        <span aria-hidden="true" className={cx("text-3xl transition", checked && "scale-110")}>
+        <span
+          aria-hidden="true"
+          className={cx("flex shrink-0 items-center justify-center text-3xl transition", swatch && cx("size-12 rounded-pill", swatch), checked && "scale-110")}
+        >
           {emoji}
         </span>
       )}

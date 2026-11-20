@@ -38,7 +38,7 @@ export default function PublicLayout() {
         <Outlet />
       </main>
 
-      <footer className="mt-16 bg-sand">
+      <footer className="bg-sand">
         <div className="mx-auto grid max-w-content gap-8 px-4 py-12 sm:grid-cols-3 md:px-6">
           {FOOTER_COLUMNS.map((column) => (
             <nav key={column.title} aria-label={column.title}>
@@ -61,6 +61,9 @@ export default function PublicLayout() {
               </a>
               . In an emergency call <a href="tel:112" className="font-bold text-ink-900 underline decoration-brand-500 decoration-2 underline-offset-4">112</a>.
             </p>
+            <Link to="/help" className="mt-3 inline-block font-bold text-ink-900 underline decoration-brand-500 decoration-2 underline-offset-4">
+              Get help now (no login needed)
+            </Link>
           </div>
         </div>
         <p className="border-t border-line px-4 py-4 text-center text-small text-ink-700">

@@ -10,6 +10,7 @@ import { Link, NavLink, Outlet, useLocation } from "react-router-dom";
 import Logo from "../components/Logo";
 import { Avatar, Badge, Button, cx, Modal } from "../components/ui";
 import { ROLE_HOME } from "../config";
+import { AlertCountProvider, useAlertCount } from "../context/AlertCountContext";
 import { useAuth } from "../context/AuthContext";
 import { MOBILE_TABS, NAVIGATION } from "./navigation";
 
@@ -28,6 +29,7 @@ export default function AppLayout() {
   const links = NAVIGATION[user.role];
 
   return (
+    <AlertCountProvider enabled={user.role === "counsellor"}>
     <div className="min-h-screen lg:flex">
       <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-pill focus:bg-surface focus:px-4 focus:py-2">
         Skip to content
@@ -51,10 +53,23 @@ export default function AppLayout() {
 
       <MobileTabBar links={links} />
     </div>
+    </AlertCountProvider>
   );
 }
 
-function SidebarLink({ to, label, icon: Icon, end }) {
+/** Small count pill (e.g. open alerts). Screen readers hear "3 open", not just "3". */
+function CountBadge({ count, className }) {
+  if (!count) return null;
+  return (
+    <span className={cx("min-w-6 rounded-pill bg-brand-500 px-2 text-center text-small font-bold text-ink-900", className)}>
+      <span aria-hidden="true">{count > 99 ? "99+" : count}</span>
+      <span className="sr-only">{count} open</span>
+    </span>
+  );
+}
+
+function SidebarLink({ to, label, icon: Icon, end, badge }) {
+  const alerts = useAlertCount();
   return (
     <NavLink
       to={to}
@@ -71,7 +86,8 @@ function SidebarLink({ to, label, icon: Icon, end }) {
           <span className={cx("flex size-10 items-center justify-center rounded-pill transition", isActive ? "bg-brand-500 text-ink-900" : "bg-sand group-hover:bg-line")}>
             <Icon aria-hidden="true" className="size-5" />
           </span>
-          {label}
+          <span className="flex-1">{label}</span>
+          {badge === "alerts" && <CountBadge count={alerts?.count} className="mr-2" />}
         </>
       )}
     </NavLink>
@@ -174,6 +190,7 @@ function AvatarMenu() {
 function MobileTabBar({ links }) {
   const [moreOpen, setMoreOpen] = useState(false);
   const location = useLocation();
+  const alerts = useAlertCount();
   const tabs = links.length > MOBILE_TABS + 1 ? links.slice(0, MOBILE_TABS) : links;
   const extra = links.length > MOBILE_TABS + 1 ? links.slice(MOBILE_TABS) : [];
   const extraActive = extra.some((l) => location.pathname.startsWith(l.to));
@@ -197,11 +214,14 @@ function MobileTabBar({ links }) {
         </ul>
       )}
       <div className="flex gap-1 py-1.5">
-        {tabs.map(({ to, label, icon: Icon, end }) => (
+        {tabs.map(({ to, label, icon: Icon, end, badge }) => (
           <NavLink key={to} to={to} end={end} className={({ isActive }) => tabClass(isActive)}>
             {({ isActive }) => (
               <>
-                <span className={iconClass(isActive)}><Icon aria-hidden="true" className="size-5" /></span>
+                <span className={cx(iconClass(isActive), "relative")}>
+                  <Icon aria-hidden="true" className="size-5" />
+                  {badge === "alerts" && <CountBadge count={alerts?.count} className="absolute -right-1 -top-1 !min-w-5 !px-1 !text-xs" />}
+                </span>
                 {label}
               </>
             )}

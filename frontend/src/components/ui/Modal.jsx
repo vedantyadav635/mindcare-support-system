@@ -10,7 +10,9 @@ import { cx } from "./cx";
  *   ...content...
  * </Modal>
  */
-export default function Modal({ open, onClose, title, footer, children, className }) {
+const SIZES = { md: "max-w-lg", lg: "max-w-4xl" }; // lg: for forms with a side preview
+
+export default function Modal({ open, onClose, title, footer, children, className, size = "md" }) {
   const dialog = useRef(null);
   const titleId = useId();
 
@@ -28,8 +30,9 @@ export default function Modal({ open, onClose, title, footer, children, classNam
       onClose={onClose} // Escape key
       onClick={(e) => e.target === dialog.current && onClose()} // click on the backdrop
       className={cx(
-        "m-auto w-[calc(100%-2rem)] max-w-lg rounded-xl bg-surface p-0 text-ink-700 shadow-lift backdrop:bg-ink-900/40",
+        "m-auto max-h-[calc(100dvh-2rem)] w-[calc(100%-2rem)] overflow-y-auto rounded-xl bg-surface p-0 text-ink-700 shadow-lift backdrop:bg-ink-900/40",
         "open:animate-pop-in",
+        SIZES[size],
         className,
       )}
     >

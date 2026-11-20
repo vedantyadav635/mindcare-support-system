@@ -59,6 +59,7 @@ frontend/src/
   pages/
     auth/  student/  counsellor/  admin/
   hooks/        reusable hooks (e.g. useApi)
+  utils/        small pure helpers (date formatting, ...)
   assets/       images, fonts
 ```
 

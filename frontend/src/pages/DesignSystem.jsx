@@ -4,9 +4,10 @@
  */
 import { Heart, Moon, Wind } from "lucide-react";
 import { useState } from "react";
+import PasswordStrength from "../components/PasswordStrength";
 import {
   Avatar, Badge, Button, Card, Chip, Disclaimer, EmptyState, FormField, Input, Modal,
-  OptionCard, PageHeader, SectionBlob, Select, Spinner, TextArea, useToast,
+  OptionCard, PageHeader, PasswordInput, ResponsiveTable, SectionBlob, SegmentedControl, Select, Spinner, Switch, TextArea, useToast,
 } from "../components/ui";
 import { APP_NAME } from "../config";
 
@@ -33,10 +34,10 @@ const TYPE_SCALE = [
 ];
 
 const RADII = [["sm 10", "rounded-sm"], ["md 16", "rounded-md"], ["lg 24 · cards", "rounded-lg"], ["xl 32 · hero", "rounded-xl"], ["pill", "rounded-pill"]];
-const ACCENTS = ["brand", "sky", "lilac", "mint", "sun", "blush"];
+const ACCENTS = ["orange", "sky", "lilac", "mint", "sun", "blush"];
 const SHAPES = ["blob", "circle", "ring", "arc", "star", "smile"];
 const MOODS = [[1, "😞", "Very low"], [2, "🙁", "Low"], [3, "😐", "Okay"], [4, "🙂", "Good"], [5, "😄", "Very good"]];
-const TINTS = ["none", "brand", "sky", "lilac", "mint", "sun", "blush", "sand"];
+const TINTS = ["none", "brand", "peach", "sky", "lilac", "mint", "sun", "blush", "sand"];
 
 function Section({ title, children }) {
   return (
@@ -54,6 +55,9 @@ export default function DesignSystem() {
   const [topics, setTopics] = useState(["sleep"]);
   const [note, setNote] = useState("Exams next week, feeling a bit nervous.");
   const [email, setEmail] = useState("not-an-email");
+  const [password, setPassword] = useState("sunny-Days-2026");
+  const [period, setPeriod] = useState("week");
+  const [required, setRequired] = useState(true);
 
   const toggleTopic = (t) => setTopics((all) => (all.includes(t) ? all.filter((x) => x !== t) : [...all, t]));
 
@@ -153,6 +157,9 @@ export default function DesignSystem() {
           <FormField label="Email" error={email.includes("@") ? undefined : "Please enter a valid email address"}>
             <Input type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
           </FormField>
+          <FormField label="Password (show/hide)" hint={<PasswordStrength password={password} />}>
+            <PasswordInput autoComplete="new-password" value={password} onChange={(e) => setPassword(e.target.value)} />
+          </FormField>
           <FormField label="Year of study">
             <Select defaultValue="2">
               {[1, 2, 3, 4].map((y) => <option key={y} value={y}>Year {y}</option>)}
@@ -174,6 +181,38 @@ export default function DesignSystem() {
           ))}
           <Chip>plain tag</Chip>
         </div>
+        <div className="mt-4 flex flex-wrap gap-3">
+          <Chip as="a" href="#top" size="md" icon={Moon}>Link chip (md)</Chip>
+        </div>
+      </Section>
+
+      <Section title="Switch">
+        <div className="flex items-center gap-3">
+          <Switch label="Required" checked={required} onChange={setRequired} />
+          <span>{required ? "Required" : "Optional"}</span>
+        </div>
+      </Section>
+
+      <Section title="Responsive table (cards on phones)">
+        <ResponsiveTable
+          caption="Example people"
+          rowKey={(row) => row.name}
+          rows={[{ name: "Asha Patel", role: "Student" }, { name: "Dr. Meera Rao", role: "Counsellor" }]}
+          columns={[
+            { id: "name", header: "Name", primary: true, cell: (row) => row.name },
+            { id: "role", header: "Role", cell: (row) => <Badge status="info">{row.role}</Badge> },
+            { id: "actions", header: "Actions", actions: true, cell: () => <Button variant="secondary" size="sm">Edit</Button> },
+          ]}
+        />
+      </Section>
+
+      <Section title="Segmented control">
+        <SegmentedControl
+          label="Time period"
+          value={period}
+          onChange={setPeriod}
+          options={[{ value: "week", label: "Week" }, { value: "month", label: "Month" }]}
+        />
       </Section>
 
       <Section title="Option cards (answers)">

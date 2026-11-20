@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Button, Card, FormField, Input, SectionBlob } from "../../components/ui";
+import AuthSplit from "../../components/AuthSplit";
+import ErrorNotice from "../../components/ErrorNotice";
+import { Button, Card, FormField, Input, PasswordInput } from "../../components/ui";
 import { ROLE_HOME } from "../../config";
 import { useAuth } from "../../context/AuthContext";
 
@@ -25,26 +27,27 @@ export default function Login() {
     setError("");
     try {
       const user = await login(email, password);
-      navigate(destination(user.role, location.state?.from), { replace: true });
+      navigate(destination(user.role, location.state?.from), { replace: true }); // each role goes to its own home
     } catch (e) {
+      // e.g. "Incorrect email or password", or "Too many failed login attempts..."
       setError(e.message);
       setBusy(false);
     }
   }
 
   return (
-    <section className="relative mx-auto max-w-md px-4 py-12">
-      <SectionBlob shape="circle" color="lilac" className="absolute -left-6 top-4 size-24 opacity-60" />
-      <Card padding="lg" className="relative">
+    <AuthSplit panel={{ tint: "lilac", title: "Good to see you again", text: "Take a breath. Your space is just how you left it." }}>
+      <Card padding="lg">
         <h1>Welcome back</h1>
-        <p className="mb-6 mt-2 text-ink-700">Good to see you again.</p>
+        <p className="mb-6 mt-2 text-ink-700">Log in to continue.</p>
         <form onSubmit={submit} className="space-y-5">
           <FormField label="Email">
             <Input type="email" autoComplete="email" required value={email} onChange={(e) => setEmail(e.target.value)} />
           </FormField>
-          <FormField label="Password" error={error || undefined}>
-            <Input type="password" autoComplete="current-password" required value={password} onChange={(e) => setPassword(e.target.value)} />
+          <FormField label="Password">
+            <PasswordInput autoComplete="current-password" required value={password} onChange={(e) => setPassword(e.target.value)} />
           </FormField>
+          <ErrorNotice>{error}</ErrorNotice>
           <Button type="submit" loading={busy} className="w-full">Log in</Button>
         </form>
         <p className="mt-6 text-center text-ink-700">
@@ -54,6 +57,6 @@ export default function Login() {
           </Link>
         </p>
       </Card>
-    </section>
+    </AuthSplit>
   );
 }
