@@ -64,7 +64,7 @@ frontend/src/
 ```
 
 ### Design tokens
-- All colours, fonts, radii and shadows come from the Tailwind theme: Tailwind v4 keeps it in `src/index.css` (`@theme` block). **Never hard-code hex colours** (or pixel radii/shadows) in components. Tailwind's default palette is switched off, so only our tokens exist.
+- All colours, fonts, radii and shadows come from the Tailwind theme: Tailwind v4 keeps it in `src/index.css` (`@theme` block). **Never hard-code hex colours** (or pixel radii/shadows) in components. Tailwind's default palette is switched off, so only our tokens exist. Full-width section backgrounds use the solid soft tints (`bg-sky-soft`, `bg-lilac-soft`, `bg-mint-soft`, `bg-sun-soft`, `bg-blush-soft`), the dotted pattern `bg-dots`, and the wide container `max-w-wide` (90rem); `max-w-content` (70rem) is for reading-width text.
 - Contrast rules (AA): dark ink-900 text on orange buttons; helper text uses ink-700 (ink-500 only for icons/borders/disabled); small orange text only brand-700 on white; status colours only as dots/borders/icons next to dark text. The live style guide is at `/design` (dev only).
 - The app name "MindCare" is a placeholder: it lives only in `src/config.js` (`APP_NAME`).
 

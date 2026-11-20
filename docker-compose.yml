@@ -1,5 +1,6 @@
 # Run everything with:  docker compose up --build
 # First copy .env.example to .env (in this folder) and fill in the values.
+# Then open http://localhost:5173 (app), http://localhost:8000/docs (API docs).
 
 services:
   db:
@@ -35,13 +36,17 @@ services:
     volumes:
       - hf_cache:/home/appuser/.cache/huggingface   # AI models downloaded once
 
-  # frontend:
-  #   build: ./frontend
-  #   depends_on:
-  #     - backend
-  #   ports:
-  #     - "5173:80"
-  #   # The React app calls the API at http://localhost:8000/api
+  frontend:
+    build:
+      context: ./frontend
+      args:
+        # The address the BROWSER uses to reach the API (baked into the app when it is built).
+        # Port 8000 is published by the backend above, so localhost works from your own machine.
+        VITE_API_URL: ${VITE_API_URL:-http://localhost:8000/api}
+    depends_on:
+      - backend
+    ports:
+      - "5173:80"   # http://localhost:5173 (the backend's CORS_ORIGINS allows this address by default)
 
 volumes:
   pgdata:

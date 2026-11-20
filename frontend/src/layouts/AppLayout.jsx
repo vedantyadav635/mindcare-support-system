@@ -30,7 +30,7 @@ export default function AppLayout() {
 
   return (
     <AlertCountProvider enabled={user.role === "counsellor"}>
-    <div className="min-h-screen lg:flex">
+    <div className="min-h-screen bg-gradient-to-br from-cream via-cream to-brand-50 lg:flex">
       <a href="#main" className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-pill focus:bg-surface focus:px-4 focus:py-2">
         Skip to content
       </a>
@@ -46,7 +46,7 @@ export default function AppLayout() {
       <div className="flex min-w-0 flex-1 flex-col">
         <TopBar />
         {/* pb-28 leaves room for the mobile tab bar; key = path replays the fade-in per page */}
-        <main id="main" key={location.pathname} className="mx-auto w-full max-w-content flex-1 animate-fade-up px-4 pb-28 pt-6 md:px-6 lg:pb-12">
+        <main id="main" key={location.pathname} className="mx-auto w-full max-w-wide flex-1 animate-fade-up px-4 pb-28 pt-6 md:px-8 lg:px-10 lg:pb-12">
           <Outlet />
         </main>
       </div>
@@ -98,7 +98,7 @@ function TopBar() {
   const { user } = useAuth();
   return (
     <header className="sticky top-0 z-30 border-b border-line bg-cream/90 backdrop-blur">
-      <div className="mx-auto flex max-w-content items-center gap-3 px-4 py-3 md:px-6">
+      <div className="mx-auto flex max-w-wide items-center gap-3 px-4 py-3 md:px-8 lg:px-10">
         {/* Greeting (smaller on phones; the logo lives in the desktop sidebar) */}
         <p className="min-w-0 flex-1 truncate font-heading text-body font-extrabold text-ink-900 md:text-h3">
           {greeting()}, {firstName(user.full_name)}

@@ -3,7 +3,7 @@ import { cx } from "./cx";
 /**
  * SectionBlob: flat decorative shapes (original, drawn from basic SVG). Always hidden from screen readers.
  *   shape: "blob" | "circle" | "ring" | "arc" | "star" | "smile" (a simple smiling-circle character)
- *   color: "orange" | "brand" (light orange) | "sky" | "lilac" | "mint" | "sun" | "blush" | "sand"
+ *   color: "orange" | "brand" (light orange) | "sky" | "lilac" | "mint" | "sun" | "blush" | "sand" | "surface" (white)
  *   float: drifts slowly (off when the user prefers reduced motion)
  * Position it with className, e.g. "absolute -right-8 top-4 size-40".
  */
@@ -16,6 +16,7 @@ const FILL = {
   sun: "fill-sun",
   blush: "fill-blush",
   sand: "fill-sand",
+  surface: "fill-surface", // white, for shapes on tinted backgrounds
 };
 const STROKE = {
   orange: "stroke-brand-500",
@@ -26,6 +27,7 @@ const STROKE = {
   sun: "stroke-sun",
   blush: "stroke-blush",
   sand: "stroke-sand",
+  surface: "stroke-surface",
 };
 
 const BLOB =

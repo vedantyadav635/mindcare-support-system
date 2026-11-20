@@ -144,7 +144,10 @@ export default function CheckInFlow({ questions, todayEntry }) {
   return (
     <div className="relative mx-auto max-w-2xl py-2">
       <h1 className="sr-only">Daily check-in</h1>
-      <SectionBlob shape="blob" color="sun" className="pointer-events-none absolute -right-20 -top-16 -z-10 size-56 opacity-40" />
+      {/* The blob is clipped by this box, so it can never make the page scroll sideways */}
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+        <SectionBlob shape="blob" color="sun" className="absolute -right-20 -top-16 size-56 opacity-40" />
+      </div>
 
       <ProgressDots label="Check-in progress" total={total} current={reviewing ? total + 1 : step + 1} valueText={eyebrow} />
       <p aria-live="polite" className="mt-5 text-center text-small font-semibold text-ink-700">

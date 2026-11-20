@@ -132,7 +132,8 @@ export default function Chat() {
         </Link>
       )}
 
-      <div ref={scroller} role="log" aria-label="Conversation" className="flex-1 overflow-y-auto rounded-lg bg-sand/60 p-3 sm:p-5">
+      {/* tabIndex=0: keyboard users can focus the conversation and scroll it with the arrow keys */}
+      <div ref={scroller} role="log" tabIndex={0} aria-label="Conversation" className="flex-1 overflow-y-auto rounded-lg bg-sand/60 p-3 sm:p-5">
         {loading ? (
           <div className="flex h-full items-center justify-center text-brand-500"><Spinner size="lg" label="Loading your conversation" /></div>
         ) : loadError ? (

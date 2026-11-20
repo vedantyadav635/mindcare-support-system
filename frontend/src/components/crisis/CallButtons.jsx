@@ -2,6 +2,9 @@
  * CallButtons: tap-to-call links for crisis help. Real <a href="tel:..."> links, so phones dial directly.
  *   size "lg": big full-width buttons (crisis screen)    size "sm": compact pills (inside the chat)
  * Calm, not alarming: dark text on soft colours, no red.
+ *
+ * Accessibility: the link's name is its visible text with a hidden "Call" in front. (An aria-label that
+ * differs from the visible words breaks voice control: "click Tele-MANAS 14416" must work.)
  */
 import { Phone } from "lucide-react";
 import { telHref } from "../../utils/format";
@@ -15,10 +18,11 @@ export default function CallButtons({ options, size = "lg" }) {
           <li key={o.id}>
             <a
               href={telHref(o.number)}
-              aria-label={`Call ${o.label} on ${o.number}`}
               className="inline-flex min-h-11 items-center gap-2 rounded-pill bg-brand-500 px-4 font-heading font-bold text-ink-900 shadow-soft transition hover:-translate-y-0.5 hover:shadow-lift"
             >
-              <Phone aria-hidden="true" className="size-4" /> {o.label} {o.number}
+              <Phone aria-hidden="true" className="size-4" />
+              <span className="sr-only">Call </span>
+              {o.label} {o.number}
             </a>
           </li>
         ))}
@@ -32,7 +36,6 @@ export default function CallButtons({ options, size = "lg" }) {
         <li key={o.id}>
           <a
             href={telHref(o.number)}
-            aria-label={`Call ${o.label} on ${o.number}${o.note ? `. ${o.note}` : ""}`}
             className={cx(
               "flex min-h-20 items-center gap-4 rounded-lg px-5 py-4 shadow-soft transition hover:-translate-y-0.5 hover:shadow-lift",
               // the first (main) helpline stands out in the accent colour; the rest are white
@@ -43,7 +46,7 @@ export default function CallButtons({ options, size = "lg" }) {
               <Phone className="size-6 text-ink-900" />
             </span>
             <span className="min-w-0 flex-1">
-              <span className="block font-heading font-bold text-ink-900">{o.label}</span>
+              <span className="block font-heading font-bold text-ink-900"><span className="sr-only">Call </span>{o.label}</span>
               <span className="block font-heading text-h2 font-extrabold tracking-wide text-ink-900">{o.number}</span>
               {o.note && <span className="block text-small text-ink-900">{o.note}</span>}
             </span>

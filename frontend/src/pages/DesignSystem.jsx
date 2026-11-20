@@ -20,6 +20,7 @@ const COLOR_GROUPS = [
   ["Surfaces", [["cream · page", "bg-cream", "#FFF9F2"], ["surface · cards", "bg-surface", "#FFFFFF"], ["sand · sections", "bg-sand", "#F7EDE2"]]],
   ["Ink and lines", [["ink-900 · headings", "bg-ink-900", "#2B2A33"], ["ink-700 · body", "bg-ink-700", "#4A4855"], ["ink-500 · icons only", "bg-ink-500", "#7A7787"], ["line · borders", "bg-line", "#EDE4DA"]]],
   ["Soft accents", [["sky", "bg-sky", "#8FC6F2"], ["lilac", "bg-lilac", "#B9A6F5"], ["mint", "bg-mint", "#8ED9B5"], ["sun", "bg-sun", "#FFD25E"], ["blush", "bg-blush", "#FFA9B9"]]],
+  ["Soft tints (section backgrounds)", [["sky-soft", "bg-sky-soft", "22% sky"], ["lilac-soft", "bg-lilac-soft", "22% lilac"], ["mint-soft", "bg-mint-soft", "24% mint"], ["sun-soft", "bg-sun-soft", "28% sun"], ["blush-soft", "bg-blush-soft", "24% blush"]]],
   ["Status", [["success", "bg-success", "#2E9E6B"], ["warning", "bg-warning", "#E8A317"], ["danger · crisis/errors", "bg-danger", "#D64545"]]],
   ["Mood scale 1 → 5", [["1 very low", "bg-mood-1", "#B9A6F5"], ["2 low", "bg-mood-2", "#8FC6F2"], ["3 okay", "bg-mood-3", "#FFD25E"], ["4 good", "bg-mood-4", "#FFB070"], ["5 very good", "bg-mood-5", "#8ED9B5"]]],
 ];

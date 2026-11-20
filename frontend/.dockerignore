@@ -1,0 +1,7 @@
+# Keep local installs, builds and secrets out of the image build
+node_modules
+dist
+.vite
+.env
+.env.*
+!.env.example
